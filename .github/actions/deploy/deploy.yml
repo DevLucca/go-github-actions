@@ -21,7 +21,7 @@ runs:
 
     - name: Deploy Dev
       run: |
-        STAGE=${{ inputs.who-to-greet }}
+        STAGE=${{ inputs.path }}
         SERVERLESS_STAGE=`echo $STAGE | awk '$0 == "PRODUCTION" { print "prd" } $0 != "PRODUCTION" { print "dev" }'`
 
         echo $STAGE $SERVERLESS_STAGE $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
