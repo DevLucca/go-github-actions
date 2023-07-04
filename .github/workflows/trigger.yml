@@ -16,7 +16,6 @@ on:
         type: string
 
 jobs:
-
   deploy-infra:
     name: Deploy Infra
     uses: ./.github/workflows/infra.yml@main
