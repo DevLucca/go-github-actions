@@ -24,7 +24,7 @@ runs:
       shell: bash
       run: |
         STAGE=${{ inputs.path }}
-        SERVERLESS_STAGE=`echo $STAGE | awk '$0 == "PRODUCTION" { print "prd" } $0 != "PRODUCTION" { print "dev" }'`
+        SERVERLESS_STAGE=`echo $STAGE | awk '$0 == "prd" { print "PRODUCTION" } $0 != "prd" { print "DEVELOPMENT" }'`
 
         echo $STAGE $SERVERLESS_STAGE $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
         

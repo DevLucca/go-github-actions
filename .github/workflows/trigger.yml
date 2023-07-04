@@ -6,32 +6,23 @@ on:
       stage:
         required: true
         type: choice
-        default: DEVELOPMENT
+        default: dev
         options:
-          - DEVELOPMENT
-          - PRODUCTION
+          - dev
+          - prd
       context:
         required: true
         description: List of context to be deployed. Eg. "['ampli', 'fibra', 'mobi']"
         type: string
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
-      - run: |
-          tree ./.github
-
   deploy-infra:
     name: Deploy Infra
     uses: ./.github/workflows/infra.yml
     strategy:
       matrix:
         context: ${{ fromJSON(github.event.inputs.context) }}
-    secrets:
-      AWS_ACCESS_KEY_ID: ${{ secrets[format('AWS_ACCESS_KEY_ID_{0}_{1}', github.event.inputs.stage, matrix.context)] }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets[format('AWS_SECRET_ACCESS_KEY_{0}_{1}', github.event.inputs.stage, matrix.context)] }}
+    with:
+      context: ${{ matrix.context }}
+      stage: ${{ github.event.inputs.stage }}
+    secrets: inherit
