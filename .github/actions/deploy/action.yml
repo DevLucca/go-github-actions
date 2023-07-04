@@ -16,10 +16,12 @@ runs:
       uses: actions/setup-node@v3
 
     - name: Install Serverless Framework CLI
+      shell: bash
       run: |
         npm install -g serverless@3.x
 
-    - name: Deploy Dev
+    - name: Deploy
+      shell: bash
       run: |
         STAGE=${{ inputs.path }}
         SERVERLESS_STAGE=`echo $STAGE | awk '$0 == "PRODUCTION" { print "prd" } $0 != "PRODUCTION" { print "dev" }'`
