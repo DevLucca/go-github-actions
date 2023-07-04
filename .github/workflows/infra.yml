@@ -3,9 +3,6 @@ name: Infra
 on:
   workflow_dispatch:
     inputs:
-      context:
-        required: true
-        type: string
       environment:
         required: true
         type: choice
@@ -13,13 +10,24 @@ on:
         options:
           - dev
           - prod
+      context:
+        required: true
+        description: List of context to be deployed. Eg. ["ampli", "fibra", "mobi"]
+        type: string
+      version:
+        required: true
+        description: Tag Semantic Version for deploy
+        type: string
 
 jobs:
   Test:
     name: Test
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        context: ${{ fromJSON(github.event.inputs.products)}}
+
     steps:
-      - name: Hello
-        uses: actions/hello-world-javascript-action@v1
-        with:
-          who-to-greet: Lucca
+      - name: Echo Matrix Value
+        runs: |
+          echo ${{ matrix.context }}
