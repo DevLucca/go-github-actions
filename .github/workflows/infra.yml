@@ -5,8 +5,10 @@ on:
     inputs:
       context:
         required: true
+        type: string
       stage:
         required: true
+        type: string
 
 jobs:
   deploy-infra:
@@ -25,6 +27,6 @@ jobs:
       - name: Deploy
         uses: ./.github/actions/go/deploy
         with:
-          path: ./infra/
+          path: ./infra/   
           stage: ${{ inputs.stage }}
 
