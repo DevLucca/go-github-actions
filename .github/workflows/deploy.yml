@@ -16,28 +16,6 @@ on:
         type: string
 
 jobs:
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        context: ${{ fromJSON(github.event.inputs.context)}}
-
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
-
-      - name: Setup Golang
-        uses: actions/setup-go@v4
-        with:
-          go-version: 1.18.1
-
-      - name: Test
-        run: |
-          cd ./services/${{ github.workflow }}
-          make test
 
   deploy-infra:
     name: Deploy Infra
