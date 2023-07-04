@@ -18,35 +18,14 @@ on:
 jobs:
 
   deploy-infra:
+    name: Deploy Infra
     uses: ./.github/workflow/infra.yml
     strategy:
       matrix:
         context: ${{ fromJSON(github.event.inputs.context)}}
-    with: 
-    name: Deploy Infra
-    runs-on: ubuntu-latest
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets[format('AWS_ACCESS_KEY_ID_{0}_{1}', github.event.inputs.stage, matrix.context)] }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets[format('AWS_SECRET_ACCESS_KEY_{0}_{1}', github.event.inputs.stage, matrix.context)] }}
-    
-
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
-
-      - name: Deploy
-        uses: ./.github/actions/deploy
-        with:
-          path: Test
-          stage: github.event.inputs.stage
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: test
-          path: test.txt
 
   Test:
     needs:
