@@ -49,7 +49,7 @@ jobs:
           # make serverless-deploy STAGE=$SERVERLESS_STAGE
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@latest
+        uses: actions/upload-artifact@v3
         with:
           name: test
           path: test.txt
