@@ -19,7 +19,7 @@ jobs:
 
   deploy-infra:
     name: Deploy Infra
-    uses: .github/workflow/infra.yml@main
+    uses: DevLucca/go-github-action/.github/workflow/infra.yml@main
     strategy:
       matrix:
         context: ${{ fromJSON(github.event.inputs.context)}}
