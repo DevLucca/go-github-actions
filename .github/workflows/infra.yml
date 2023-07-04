@@ -16,17 +16,10 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
         with:
-
           ref: ${{ github.ref }}
 
-      - name: Checkout Repo
-        run: |
-          echo pwd
-          ls ./.github/actions
-          tree ./.github
-
       - name: Deploy
-        uses: ./.github/actions/deploy
+        uses: ./.github/actions/go/deploy
         with:
           path: Test
           stage: github.event.inputs.stage
