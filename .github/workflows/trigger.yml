@@ -1,4 +1,4 @@
-name: Deploy
+name: Trigger Pipeline
 
 on:
   workflow_dispatch:
@@ -18,14 +18,17 @@ on:
 jobs:
 
   deploy-infra:
+    uses: ./.github/workflow/infra.yml
+    strategy:
+      matrix:
+        context: ${{ fromJSON(github.event.inputs.context)}}
+    with: 
     name: Deploy Infra
     runs-on: ubuntu-latest
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets[format('AWS_ACCESS_KEY_ID_{0}_{1}', github.event.inputs.stage, matrix.context)] }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets[format('AWS_SECRET_ACCESS_KEY_{0}_{1}', github.event.inputs.stage, matrix.context)] }}
-    strategy:
-      matrix:
-        context: ${{ fromJSON(github.event.inputs.context)}}
+    
 
     steps:
       - name: Checkout Repo
