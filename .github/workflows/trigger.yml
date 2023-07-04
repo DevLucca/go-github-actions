@@ -16,6 +16,14 @@ on:
         type: string
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
   deploy-infra:
     name: Deploy Infra
     uses: ./.github/workflows/infra.yml
