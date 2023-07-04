@@ -22,8 +22,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-          with:
-            ref: ${{ github.ref }}
+        with:
+          ref: ${{ github.ref }}
 
   deploy-infra:
     needs: 
