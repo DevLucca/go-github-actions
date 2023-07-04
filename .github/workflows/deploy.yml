@@ -21,8 +21,8 @@ jobs:
     name: Deploy Infra
     runs-on: ubuntu-latest
     env:
-      AWS_ACCESS_KEY_ID: ${{ format('AWS_ACCESS_KEY_ID_{0}_{1}', github.event.inputs.stage, matrix.context) }}
-      AWS_SECRET_ACCESS_KEY: ${{ format('AWS_SECRET_ACCESS_KEY_{0}_{1}', github.event.inputs.stage, matrix.context) }}
+      AWS_ACCESS_KEY_ID: ${{ secrets[format('AWS_ACCESS_KEY_ID_{0}_{1}', github.event.inputs.stage, matrix.context)] }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets[format('AWS_SECRET_ACCESS_KEY_{0}_{1}', github.event.inputs.stage, matrix.context)] }}
     strategy:
       matrix:
         context: ${{ fromJSON(github.event.inputs.context)}}
