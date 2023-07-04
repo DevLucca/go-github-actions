@@ -14,10 +14,6 @@ on:
         required: true
         description: List of context to be deployed. Eg. "['ampli', 'fibra', 'mobi']"
         type: string
-      version:
-        required: true
-        description: Tag Semantic Version for deploy
-        type: string
 
 jobs:
   test:
@@ -48,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       STAGE: ${{ github.event.inputs.environment }}
-      SERVERLESS_STAGE: ${{ github.event.inputs.environment == "PRODUCTION" && 'prd' || 'dev' }}
+      SERVERLESS_STAGE: ${{ github.event.inputs.environment == 'PRODUCTION' && 'prd' || 'dev' }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_${{ github.event.inputs.environment }}_${{ matrix.context }} }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_${{ github.event.inputs.environment }}_${{ matrix.context }} }}
     strategy:
