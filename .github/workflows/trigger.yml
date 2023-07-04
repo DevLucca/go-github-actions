@@ -18,7 +18,7 @@ on:
 jobs:
   deploy-infra:
     name: Deploy Infra
-    uses: ./.github/workflows/infra.yml@main
+    uses: ./.github/workflows/infra.yml
     strategy:
       matrix:
         context: ${{ fromJSON(github.event.inputs.context)}}
