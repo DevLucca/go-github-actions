@@ -1,4 +1,4 @@
-name: Infra
+name: Deploy
 
 on:
   workflow_dispatch:
@@ -12,7 +12,7 @@ on:
           - prod
       context:
         required: true
-        description: List of context to be deployed. Eg. ["ampli", "fibra", "mobi"]
+        description: List of context to be deployed. Eg. "['ampli', 'fibra', 'mobi']"
         type: string
       version:
         required: true
