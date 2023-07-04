@@ -14,10 +14,6 @@ jobs:
   deploy-infra:
     name: Deploy Infrastructure
     runs-on: ubuntu-latest
-    envs:
-      AWS_ACCESS_KEY_ID: ${{ secrets[format('AWS_ACCESS_KEY_ID_{0}_{1}', inputs.stage, inputs.context)] }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets[format('AWS_SECRET_ACCESS_KEY_{0}_{1}', inputs.stage, inputs.context)] }}
-
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3

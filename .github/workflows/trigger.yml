@@ -6,10 +6,10 @@ on:
       stage:
         required: true
         type: choice
-        default: dev
+        default: DEVELOPMENT
         options:
-          - dev
-          - prd
+          - DEVELOPMENT
+          - PRODUCTION
       context:
         required: true
         description: List of context to be deployed. Eg. "['ampli', 'fibra', 'mobi']"
@@ -25,4 +25,6 @@ jobs:
     with:
       context: ${{ matrix.context }}
       stage: ${{ github.event.inputs.stage }}
-    secrets: inherit
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets[format('AWS_ACCESS_KEY_ID_{0}_{1}', github.event.inputs.stage, matrix.context)] }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets[format('AWS_SECRET_ACCESS_KEY_{0}_{1}', github.event.inputs.stage, matrix.context)] }}
