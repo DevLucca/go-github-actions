@@ -3,7 +3,7 @@ name: Deploy
 on:
   workflow_dispatch:
     inputs:
-      environment:
+      stage:
         required: true
         type: choice
         default: DEVELOPMENT
@@ -21,10 +21,8 @@ jobs:
     name: Deploy Infra
     runs-on: ubuntu-latest
     env:
-      STAGE: ${{ github.event.inputs.environment }}
-      SERVERLESS_STAGE: ${{ github.event.inputs.environment == 'PRODUCTION' && 'prd' || 'dev' }}
-      KEY_AWS_ACCESS_KEY_ID: ${{ format('AWS_ACCESS_KEY_ID_{0}_{1}', github.event.inputs.environment, matrix.context) }}
-      KEY_AWS_SECRET_ACCESS_KEY: ${{ format('AWS_SECRET_ACCESS_KEY_{0}_{1}', github.event.inputs.environment, matrix.context) }}
+      AWS_ACCESS_KEY_ID: ${{ format('AWS_ACCESS_KEY_ID_{0}_{1}', github.event.inputs.stage, matrix.context) }}
+      AWS_SECRET_ACCESS_KEY: ${{ format('AWS_SECRET_ACCESS_KEY_{0}_{1}', github.event.inputs.stage, matrix.context) }}
     strategy:
       matrix:
         context: ${{ fromJSON(github.event.inputs.context)}}
@@ -34,19 +32,12 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: ${{ github.ref }}
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
 
-      - name: Deploy Dev
-        run: |
-          npm install -g serverless@3.x
-          AWS_ACCESS_KEY_ID=${{ secrets[env.KEY_AWS_ACCESS_KEY_ID] }}
-          AWS_SECRET_ACCESS_KEY=${{ secrets[env.KEY_AWS_SECRET_ACCESS_KEY] }}
-          echo $STAGE $SERVERLESS_STAGE $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
-          echo test >> test.txt
-          # cd ./services/${{ github.workflow }}
-          # make serverless-deploy STAGE=$SERVERLESS_STAGE
+      - name: Deploy
+        uses: ./.github/actions/deploy
+        with:
+          path: Test
+          stage: github.event.inputs.stage
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
