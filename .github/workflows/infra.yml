@@ -20,7 +20,7 @@ jobs:
 
       - name: Checkout Repo
         run: |
-          tree ./
+          tree $(pwd)
 
       - name: Deploy
         uses: ./.github/actions/deploy
