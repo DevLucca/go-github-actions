@@ -1,4 +1,4 @@
-name: Infra
+name: Deploy
 
 on:
   workflow_call:
@@ -16,15 +16,22 @@ on:
         required: true
 
 jobs:
+  checkout:
+    name: Checkout
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+          with:
+            ref: ${{ github.ref }}
+
   deploy-infra:
+    needs: 
+      - checkout
+    
     name: Deploy Infrastructure
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
-
       - name: Deploy
         uses: ./.github/actions/go/deploy
         with:
