@@ -1,0 +1,25 @@
+name: Infra
+
+on:
+  workflow_dispatch:
+    inputs:
+      context:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: choice
+        default: dev
+        options:
+          - dev
+          - prod
+
+jobs:
+  Test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hello
+        uses: @actions/hello-world
+        with:
+          who-to-greet: Lucca
