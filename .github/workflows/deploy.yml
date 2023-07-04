@@ -45,8 +45,8 @@ jobs:
     env:
       STAGE: ${{ github.event.inputs.environment }}
       SERVERLESS_STAGE: ${{ github.event.inputs.environment == 'PRODUCTION' && 'prd' || 'dev' }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_${{ github.event.inputs.environment }}_${{ matrix.context }} }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_${{ github.event.inputs.environment }}_${{ matrix.context }} }}
+      AWS_ACCESS_KEY_ID: ${{ format('secrets.AWS_ACCESS_KEY_ID_{0}_{1}', github.event.inputs.environment, matrix.context) }}
+      AWS_SECRET_ACCESS_KEY: ${{ format('secrets.AWS_SECRET_ACCESS_KEY_{0}_{1}', github.event.inputs.environment, matrix.context) }}
     strategy:
       matrix:
         context: ${{ fromJSON(github.event.inputs.context)}}
