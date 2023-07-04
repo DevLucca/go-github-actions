@@ -19,19 +19,10 @@ jobs:
 
   deploy-infra:
     name: Deploy Infra
-    uses: DevLucca/go-github-action/.github/workflow/infra.yml@main
+    uses: ./.github/workflows/infra.yml@main
     strategy:
       matrix:
         context: ${{ fromJSON(github.event.inputs.context)}}
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets[format('AWS_ACCESS_KEY_ID_{0}_{1}', github.event.inputs.stage, matrix.context)] }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets[format('AWS_SECRET_ACCESS_KEY_{0}_{1}', github.event.inputs.stage, matrix.context)] }}
-
-  Test:
-    needs:
-      - deploy-infra
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v3
-        with:
-          name: test
