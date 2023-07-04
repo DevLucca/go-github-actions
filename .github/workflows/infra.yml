@@ -20,7 +20,7 @@ jobs:
 
       - name: Checkout Repo
         run: |
-          tree /home/runner/work
+          tree ./.github
 
       - name: Deploy
         uses: ./.github/actions/deploy
