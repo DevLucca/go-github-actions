@@ -31,3 +31,8 @@ jobs:
       - name: Echo Matrix Value
         run: |
           echo ${{ matrix.context }}
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
