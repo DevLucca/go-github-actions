@@ -20,6 +20,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Hello
-        uses: @actions/hello-world
+        uses: actions/hello-world-javascript-action
         with:
           who-to-greet: Lucca
