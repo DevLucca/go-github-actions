@@ -19,7 +19,7 @@ jobs:
           ref: ${{ github.ref }}
 
       - name: Deploy
-        uses: ./.github/actions/deploy
+        uses: .github/actions/deploy
         with:
           path: Test
           stage: github.event.inputs.stage
