@@ -22,6 +22,6 @@ jobs:
     strategy:
       matrix:
         context: ${{ fromJSON(github.event.inputs.context) }}
-    secrets: inherit
+    secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets[format('AWS_ACCESS_KEY_ID_{0}_{1}', github.event.inputs.stage, matrix.context)] }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets[format('AWS_SECRET_ACCESS_KEY_{0}_{1}', github.event.inputs.stage, matrix.context)] }}
