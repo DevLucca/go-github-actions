@@ -41,8 +41,10 @@ jobs:
               done
           done
 
+          echo $SERVICES_FOLDERS $SERVICES_ARRAY
+
           JSON_ARRAY="["${$(printf ", \"%s\"" "${SERVICES_ARRAY[@]}"):1}"]"
-          echo $SERVICES_FOLDERS $JSON_ARRAY
+          echo $JSON_ARRAY
 
           echo "services={\"include\":$(echo $JSON_ARRAY)}" >> $GITHUB_OUTPUT
 
@@ -50,6 +52,7 @@ jobs:
     needs: list-services
     name: Test Services
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         service: ${{ fromJSON(needs.list-services.outputs.services) }}
