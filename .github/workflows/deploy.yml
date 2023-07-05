@@ -75,8 +75,9 @@ jobs:
         with:
           name: build-services-apis-auth
 
-      - run: |
-        tree .
+      - name: list dir
+        run: |
+          tree .
       - name: Deploy
         uses: ./.github/actions/go/deploy
         with:
