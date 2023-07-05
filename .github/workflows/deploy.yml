@@ -52,9 +52,6 @@ jobs:
       - deploy-multiregion-infra
     name: Deploy APIs
     uses: ./.github/workflows/apis.yml
-    strategy:
-      matrix:
-        context: ${{ fromJSON(github.event.inputs.context) }}
     with:
       stage: ${{ github.event.inputs.stage }}
     secrets: inherit
@@ -65,9 +62,6 @@ jobs:
       - deploy-multiregion-infra
     name: Deploy UI
     uses: ./.github/workflows/ui.yml
-    strategy:
-      matrix:
-        context: ${{ fromJSON(github.event.inputs.context) }}
     with:
       context: ${{ matrix.context }}
       stage: ${{ github.event.inputs.stage }}
