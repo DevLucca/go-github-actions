@@ -4,4 +4,5 @@ test:
 	echo "top"
 
 build:
+	mkdir bin
 	echo "top" >> bin/test2
