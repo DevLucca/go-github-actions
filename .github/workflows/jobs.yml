@@ -32,339 +32,339 @@ jobs:
           path: apis/test2 ## TROCAR
           stage: ${{ inputs.stage }}
 
-  deploy-delivery-sms:
-    name: Deploy Engage Delivery SMS Job
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
+  # deploy-delivery-sms:
+  #   name: Deploy Engage Delivery SMS Job
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #       with:
+  #         ref: ${{ github.ref }}
 
-      - name: Upload Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: build-services-apis
+  #     - name: Upload Artifact
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: build-services-apis
 
-      - name: List Dir
-        run: |
-          tree .
+  #     - name: List Dir
+  #       run: |
+  #         tree .
 
-      - name: Deploy
-        uses: ./.github/actions/go/deploy
-        with:
-          path: apis/test2 ## TROCAR
-          stage: ${{ inputs.stage }}
+  #     - name: Deploy
+  #       uses: ./.github/actions/go/deploy
+  #       with:
+  #         path: apis/test2 ## TROCAR
+  #         stage: ${{ inputs.stage }}
 
-  deploy-delivery-whatsapp:
-    name: Deploy Engage Delivery WhatsApp Job
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
+  # deploy-delivery-whatsapp:
+  #   name: Deploy Engage Delivery WhatsApp Job
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #       with:
+  #         ref: ${{ github.ref }}
 
-      - name: Upload Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: build-services-apis
+  #     - name: Upload Artifact
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: build-services-apis
 
-      - name: List Dir
-        run: |
-          tree .
+  #     - name: List Dir
+  #       run: |
+  #         tree .
 
-      - name: Deploy
-        uses: ./.github/actions/go/deploy
-        with:
-          path: apis/test2 ## TROCAR
-          stage: ${{ inputs.stage }}
+  #     - name: Deploy
+  #       uses: ./.github/actions/go/deploy
+  #       with:
+  #         path: apis/test2 ## TROCAR
+  #         stage: ${{ inputs.stage }}
 
-  deploy-datalake:
-    name: Deploy Deltalake Job
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
+  # deploy-datalake:
+  #   name: Deploy Deltalake Job
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #       with:
+  #         ref: ${{ github.ref }}
 
-      - name: Upload Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: build-services-apis
+  #     - name: Upload Artifact
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: build-services-apis
 
-      - name: List Dir
-        run: |
-          tree .
+  #     - name: List Dir
+  #       run: |
+  #         tree .
 
-      - name: Deploy
-        uses: ./.github/actions/go/deploy
-        with:
-          path: apis/test2 ## TROCAR
-          stage: ${{ inputs.stage }}
+  #     - name: Deploy
+  #       uses: ./.github/actions/go/deploy
+  #       with:
+  #         path: apis/test2 ## TROCAR
+  #         stage: ${{ inputs.stage }}
 
-  deploy-action-scheduler:
-    name: Deploy Action Scheduler Job
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
+  # deploy-action-scheduler:
+  #   name: Deploy Action Scheduler Job
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #       with:
+  #         ref: ${{ github.ref }}
 
-      - name: Upload Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: build-services-apis
+  #     - name: Upload Artifact
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: build-services-apis
 
-      - name: List Dir
-        run: |
-          tree .
+  #     - name: List Dir
+  #       run: |
+  #         tree .
 
-      - name: Deploy
-        uses: ./.github/actions/go/deploy
-        with:
-          path: apis/test2 ## TROCAR
-          stage: ${{ inputs.stage }}
+  #     - name: Deploy
+  #       uses: ./.github/actions/go/deploy
+  #       with:
+  #         path: apis/test2 ## TROCAR
+  #         stage: ${{ inputs.stage }}
 
-  deploy-action-trigger:
-    name: Deploy Action Trigger Job
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
+  # deploy-action-trigger:
+  #   name: Deploy Action Trigger Job
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #       with:
+  #         ref: ${{ github.ref }}
 
-      - name: Upload Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: build-services-apis
+  #     - name: Upload Artifact
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: build-services-apis
 
-      - name: List Dir
-        run: |
-          tree .
+  #     - name: List Dir
+  #       run: |
+  #         tree .
 
-      - name: Deploy
-        uses: ./.github/actions/go/deploy
-        with:
-          path: apis/test2 ## TROCAR
-          stage: ${{ inputs.stage }}
+  #     - name: Deploy
+  #       uses: ./.github/actions/go/deploy
+  #       with:
+  #         path: apis/test2 ## TROCAR
+  #         stage: ${{ inputs.stage }}
 
-  deploy-action-identifier:
-    name: Deploy Action Identifier Job
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
+  # deploy-action-identifier:
+  #   name: Deploy Action Identifier Job
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #       with:
+  #         ref: ${{ github.ref }}
 
-      - name: Upload Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: build-services-apis
+  #     - name: Upload Artifact
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: build-services-apis
 
-      - name: List Dir
-        run: |
-          tree .
+  #     - name: List Dir
+  #       run: |
+  #         tree .
 
-      - name: Deploy
-        uses: ./.github/actions/go/deploy
-        with:
-          path: apis/test2 ## TROCAR
-          stage: ${{ inputs.stage }}
+  #     - name: Deploy
+  #       uses: ./.github/actions/go/deploy
+  #       with:
+  #         path: apis/test2 ## TROCAR
+  #         stage: ${{ inputs.stage }}
 
-  deploy-file-process:
-    name: Deploy File Process Job
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
+  # deploy-file-process:
+  #   name: Deploy File Process Job
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #       with:
+  #         ref: ${{ github.ref }}
 
-      - name: Upload Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: build-services-apis
+  #     - name: Upload Artifact
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: build-services-apis
 
-      - name: List Dir
-        run: |
-          tree .
+  #     - name: List Dir
+  #       run: |
+  #         tree .
 
-      - name: Deploy
-        uses: ./.github/actions/go/deploy
-        with:
-          path: apis/test2 ## TROCAR
-          stage: ${{ inputs.stage }}
+  #     - name: Deploy
+  #       uses: ./.github/actions/go/deploy
+  #       with:
+  #         path: apis/test2 ## TROCAR
+  #         stage: ${{ inputs.stage }}
 
-  deploy-track-notifications:
-    name: Deploy Track Notifications Job
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
+  # deploy-track-notifications:
+  #   name: Deploy Track Notifications Job
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #       with:
+  #         ref: ${{ github.ref }}
 
-      - name: Upload Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: build-services-apis
+  #     - name: Upload Artifact
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: build-services-apis
 
-      - name: List Dir
-        run: |
-          tree .
+  #     - name: List Dir
+  #       run: |
+  #         tree .
 
-      - name: Deploy
-        uses: ./.github/actions/go/deploy
-        with:
-          path: apis/test2 ## TROCAR
-          stage: ${{ inputs.stage }}
+  #     - name: Deploy
+  #       uses: ./.github/actions/go/deploy
+  #       with:
+  #         path: apis/test2 ## TROCAR
+  #         stage: ${{ inputs.stage }}
 
-  deploy-current-action-fanout:
-    name: Deploy Current Action FanOut Job
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
+  # deploy-current-action-fanout:
+  #   name: Deploy Current Action FanOut Job
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #       with:
+  #         ref: ${{ github.ref }}
 
-      - name: Upload Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: build-services-apis
+  #     - name: Upload Artifact
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: build-services-apis
 
-      - name: List Dir
-        run: |
-          tree .
+  #     - name: List Dir
+  #       run: |
+  #         tree .
 
-      - name: Deploy
-        uses: ./.github/actions/go/deploy
-        with:
-          path: apis/test2 ## TROCAR
-          stage: ${{ inputs.stage }}
+  #     - name: Deploy
+  #       uses: ./.github/actions/go/deploy
+  #       with:
+  #         path: apis/test2 ## TROCAR
+  #         stage: ${{ inputs.stage }}
 
-  deploy-action-counter:
-    name: Deploy Action Counter Job
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
+  # deploy-action-counter:
+  #   name: Deploy Action Counter Job
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #       with:
+  #         ref: ${{ github.ref }}
 
-      - name: Upload Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: build-services-apis
+  #     - name: Upload Artifact
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: build-services-apis
 
-      - name: List Dir
-        run: |
-          tree .
+  #     - name: List Dir
+  #       run: |
+  #         tree .
 
-      - name: Deploy
-        uses: ./.github/actions/go/deploy
-        with:
-          path: apis/test2 ## TROCAR
-          stage: ${{ inputs.stage }}
+  #     - name: Deploy
+  #       uses: ./.github/actions/go/deploy
+  #       with:
+  #         path: apis/test2 ## TROCAR
+  #         stage: ${{ inputs.stage }}
 
-  deploy-deadletters-multiregion:
-    name: Deploy DeadLetters MultiRegion Job
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
+  # deploy-deadletters-multiregion:
+  #   name: Deploy DeadLetters MultiRegion Job
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #       with:
+  #         ref: ${{ github.ref }}
 
-      - name: Upload Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: build-services-apis
+  #     - name: Upload Artifact
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: build-services-apis
 
-      - name: List Dir
-        run: |
-          tree .
+  #     - name: List Dir
+  #       run: |
+  #         tree .
 
-      - name: Deploy
-        uses: ./.github/actions/go/deploy
-        with:
-          path: apis/test2 ## TROCAR
-          stage: ${{ inputs.stage }}
+  #     - name: Deploy
+  #       uses: ./.github/actions/go/deploy
+  #       with:
+  #         path: apis/test2 ## TROCAR
+  #         stage: ${{ inputs.stage }}
 
-   deploy-delete-delayed-action:
-    name: Deploy Delete Delayed Action Job
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
+  #  deploy-delete-delayed-action:
+  #   name: Deploy Delete Delayed Action Job
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #       with:
+  #         ref: ${{ github.ref }}
 
-      - name: Upload Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: build-services-apis
+  #     - name: Upload Artifact
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: build-services-apis
 
-      - name: List Dir
-        run: |
-          tree .
+  #     - name: List Dir
+  #       run: |
+  #         tree .
 
-      - name: Deploy
-        uses: ./.github/actions/go/deploy
-        with:
-          path: apis/test2 ## TROCAR
-          stage: ${{ inputs.stage }}
+  #     - name: Deploy
+  #       uses: ./.github/actions/go/deploy
+  #       with:
+  #         path: apis/test2 ## TROCAR
+  #         stage: ${{ inputs.stage }}
 
-  deploy-delete-campaign-action:
-    name: Deploy Delete Campaign Action Job
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
+  # deploy-delete-campaign-action:
+  #   name: Deploy Delete Campaign Action Job
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #       with:
+  #         ref: ${{ github.ref }}
 
-      - name: Upload Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: build-services-apis
+  #     - name: Upload Artifact
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: build-services-apis
 
-      - name: List Dir
-        run: |
-          tree .
+  #     - name: List Dir
+  #       run: |
+  #         tree .
 
-      - name: Deploy
-        uses: ./.github/actions/go/deploy
-        with:
-          path: apis/test2 ## TROCAR
-          stage: ${{ inputs.stage }}
+  #     - name: Deploy
+  #       uses: ./.github/actions/go/deploy
+  #       with:
+  #         path: apis/test2 ## TROCAR
+  #         stage: ${{ inputs.stage }}
 
-  deploy-workflow-events-consumer:
-    name: Deploy Workflow Events Consumer Job
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
+  # deploy-workflow-events-consumer:
+  #   name: Deploy Workflow Events Consumer Job
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #       with:
+  #         ref: ${{ github.ref }}
 
-      - name: Upload Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: build-services-apis
+  #     - name: Upload Artifact
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: build-services-apis
 
-      - name: List Dir
-        run: |
-          tree .
+  #     - name: List Dir
+  #       run: |
+  #         tree .
 
-      - name: Deploy
-        uses: ./.github/actions/go/deploy
-        with:
-          path: apis/test2 ## TROCAR
-          stage: ${{ inputs.stage }}
+  #     - name: Deploy
+  #       uses: ./.github/actions/go/deploy
+  #       with:
+  #         path: apis/test2 ## TROCAR
+  #         stage: ${{ inputs.stage }}
   
