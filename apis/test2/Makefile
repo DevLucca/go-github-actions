@@ -5,4 +5,4 @@ test:
 
 build:
 	mkdir bin
-	echo "top" >> bin/test2
+	echo "top" >> bin/test2.zip
