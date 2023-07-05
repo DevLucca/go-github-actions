@@ -54,7 +54,7 @@ jobs:
           ref: ${{ github.ref }}
 
       - name: Test Service
-        working-dir: ${{ matrix.service }}
+        working-directory: ${{ matrix.service }}
         run: |
           for SERVICE in ./*; do
             if [ -d "$SERVICE"]; then
