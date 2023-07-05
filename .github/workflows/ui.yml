@@ -1,0 +1,60 @@
+name: UI
+
+on:
+  workflow_call:
+    inputs:
+      context:
+        required: true
+        type: string
+      stage:
+        required: true
+        type: string
+
+jobs:
+  deploy-ui:
+    name: Deploy UI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Upload Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build-services-apis
+
+      - name: List Dir
+        run: |
+          tree .
+
+      - name: Deploy
+        uses: ./.github/actions/go/deploy
+        with:
+          path: apis/test2 ## TROCAR
+          stage: ${{ inputs.stage }}
+
+  deploy-ui-unsubscribe:
+    name: Deploy UI Unsubscribe
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Upload Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build-services-apis
+
+      - name: List Dir
+        run: |
+          tree .
+
+      - name: Deploy
+        uses: ./.github/actions/go/deploy
+        with:
+          path: apis/test2 ## TROCAR
+          stage: ${{ inputs.stage }}
