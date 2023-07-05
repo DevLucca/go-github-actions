@@ -105,6 +105,68 @@ jobs:
           name: build-services-${{ matrix.service }}
           path: ${{ matrix.service }}/**/bin/*.zip
   
+  list-uis:
+    name: List UIs
+    runs-on: ubuntu-latest
+    env:
+      UI_FOLDERS: ui ui-unsubscribe
+    outputs:
+      uis: ${{ steps.set-ui.outputs.uis }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Set UI List
+        id: set-ui
+        shell: bash
+        run: |
+          read -r -a UI_FOLDERS <<< "$UI_FOLDERS"
+          VALUES=$(printf ', "%s"' "${UI_FOLDERS[@]}")
+          UI_FOLDERS="["${VALUES:2}"]"
+          echo $UI_FOLDERS
+
+          echo "uis=$(echo $UI_FOLDERS)" >> $GITHUB_OUTPUT
+
+  build-ui:
+    needs: 
+      - list-uis
+    name: Build UI
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        ui: ${{ fromJSON(needs.list-uis.outputs.uis) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+      
+      - name: Install Dependencies
+        working-directory: ${{ matrix.ui }}
+        run: |
+          yarn install --frozen-lockfile
+
+      - name: Build UI
+        working-directory: ${{ matrix.ui }}
+        run: |
+          BUILD_MODE=`echo $STAGE | awk '$0 == "DEVELOPMENT" { print "STAGING" } $0 != "DEVELOPMENT" { print $0 }'`
+          yarn build --mode $BUILD_MODE
+      
+      - name: List Folder
+        run: |
+          tree ${{ matrix.ui }}
+
+      - name: Publish Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-uis-${{ matrix.ui }}
+          path: ${{ matrix.ui }}/dist/**
+
   deploy:
     needs: 
       - build-services
