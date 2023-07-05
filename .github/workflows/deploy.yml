@@ -47,7 +47,7 @@ jobs:
           stage: ${{ inputs.stage }}
 
   deploy-auth:
-    name: Deploy Auth
+    name: Deploy Auth API
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -59,6 +59,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-services-apis-test1
+          path: apis/test1/bin/
 
       - name: list dir
         run: |
@@ -66,5 +67,5 @@ jobs:
       - name: Deploy
         uses: ./.github/actions/go/deploy
         with:
-          path: ./apis/
+          path: apis/test1
           stage: ${{ inputs.stage }}
