@@ -47,6 +47,9 @@ jobs:
           stage: ${{ inputs.stage }}
 
   deploy-auth:
+    needs: 
+      - deploy-infra
+      - deploy-multiregion-infra
     name: Deploy Auth API
     runs-on: ubuntu-latest
     steps:

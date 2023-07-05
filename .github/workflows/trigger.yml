@@ -82,18 +82,10 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
-      - name: Build Service
-        id: build-service
-        run: |
-          cd ${{ matrix.service }}
-          make build
-          echo "service-name=$( echo ${{ matrix.service }} | sed 's#/#-#g')" >> $GITHUB_OUTPUT
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+      - name: Build Services
+        uses: ./.github/actions/go/build
         with:
-          name: build-services-${{ steps.build-service.outputs.service-name }}
-          path: ${{ matrix.service }}/bin/**
+          path: ${{ matrix.service }}
   
   deploy:
     needs: 
