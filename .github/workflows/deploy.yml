@@ -47,7 +47,7 @@ jobs:
           JSON_ARRAY="["${JSON_ARRAY_VALUES:2}"]"
           echo $JSON_ARRAY
 
-          echo "services={\"include\":$(echo $JSON_ARRAY)}" >> $GITHUB_OUTPUT
+          echo "services=$(echo $JSON_ARRAY)" >> $GITHUB_OUTPUT
 
   test-services:
     needs: list-services
@@ -55,7 +55,8 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      matrix: ${{ fromJSON(needs.list-services.outputs.services) }}
+      matrix: 
+        services: ${{ fromJSON(needs.list-services.outputs.services) }}
     steps:
       - name: Test Service
         run: |
