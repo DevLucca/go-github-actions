@@ -55,7 +55,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: $ {{ fromJSON(needs.list-services.outputs.services) }}
+        service: ${{ fromJSON(needs.list-services.outputs.services) }}
     steps:
       - name: Test Service
         run: |
