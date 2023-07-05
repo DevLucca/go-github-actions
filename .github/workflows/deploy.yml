@@ -588,28 +588,28 @@ jobs:
   #         stage: ${{ inputs.stage }}
 
   # deploy-ui-unsubscribe:
-    needs: 
-      - deploy-infra
-      - deploy-multiregion-infra
-    name: Deploy UI Unsubscribe
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
+    # needs: 
+    #   - deploy-infra
+    #   - deploy-multiregion-infra
+    # name: Deploy UI Unsubscribe
+    # runs-on: ubuntu-latest
+    # steps:
+    #   - name: Checkout
+    #     uses: actions/checkout@v3
+    #     with:
+    #       ref: ${{ github.ref }}
 
-      - name: Upload Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: build-services-apis
+    #   - name: Upload Artifact
+    #     uses: actions/download-artifact@v3
+    #     with:
+    #       name: build-services-apis
 
-      - name: List Dir
-        run: |
-          tree .
+    #   - name: List Dir
+    #     run: |
+    #       tree .
 
-      - name: Deploy
-        uses: ./.github/actions/go/deploy
-        with:
-          path: apis/test2 ## TROCAR
-          stage: ${{ inputs.stage }}
+    #   - name: Deploy
+    #     uses: ./.github/actions/go/deploy
+    #     with:
+    #       path: apis/test2 ## TROCAR
+    #       stage: ${{ inputs.stage }}
