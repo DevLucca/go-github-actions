@@ -38,7 +38,7 @@ jobs:
             for SUBFOLDER in "$SERVICE"/*; do
               if [ -d "$SUBFOLDER" ]; then
                 SERVICES_ARRAY+=("$SUBFOLDER")
-                echo $SERVICES_ARRAY
+                echo $SERVICES_ARRAY[1]
               fi
             done
           done
