@@ -53,17 +53,46 @@ jobs:
     needs: list-services
     name: Test Services
     runs-on: ubuntu-latest
-
     strategy:
       matrix: 
-        services: ${{ fromJSON(needs.list-services.outputs.services) }}
+        service: ${{ fromJSON(needs.list-services.outputs.services) }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
       - name: Test Service
         run: |
-          echo ${{ matrix }}
-  # build-services:
-  #   name: Build
+          cd ${{ matrix.service }}
+          make test
 
+  build-services:
+    needs: 
+      - list-services
+      - test-services
+
+    name: Build Services
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        service: ${{ fromJSON(needs.list-services.outputs.services) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Build Service
+        run: |
+          cd ${{ matrix.service }}
+          make build
+
+      - name: Upload Artifact
+        uses: actions/upload-artifacts@v3
+        with:
+          name: build/services/${{ matrix.service }}
+          path: ${{ matrix.service }}/bin/**
 
   deploy-infra:
     name: Deploy Infrastructure
