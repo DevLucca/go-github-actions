@@ -30,6 +30,7 @@ jobs:
           ref: ${{ github.ref }}
       - id: set-services
         name: Set Services List
+
         shell: bash
         run: |
           SERVICES_ARRAY=()
@@ -38,14 +39,12 @@ jobs:
             for SUBFOLDER in "$SERVICE"/*; do
               if [ -d "$SUBFOLDER" ]; then
                 SERVICES_ARRAY+=("$SUBFOLDER")
-                echo $SERVICES_ARRAY[1]
               fi
             done
           done
 
-          echo $SERVICES_ARRAY
-
-          JSON_ARRAY="["${$(printf ", \"%s\"" "${SERVICES_ARRAY[@]}"):1}"]"
+          JSON_ARRAY_VALUES=$(printf ", \"%s\"" "${SERVICES_ARRAY[@]}")
+          JSON_ARRAY="["${JSON_ARRAY_VALUES:2}"]"
           echo $JSON_ARRAY
 
           echo "services={\"include\":$(echo $JSON_ARRAY)}" >> $GITHUB_OUTPUT
