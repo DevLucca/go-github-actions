@@ -98,7 +98,8 @@ jobs:
           path: ${{ matrix.service }}/bin/**
   
   deploy:
-    needs: build-services
+    needs: 
+      - build-services
     name: Deploy
     uses: ./.github/workflows/deploy.yml
     strategy:
