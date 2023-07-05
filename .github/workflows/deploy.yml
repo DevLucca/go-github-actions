@@ -46,21 +46,6 @@ jobs:
           path: ./infra-multiregion/   
           stage: ${{ inputs.stage }}
 
-  deploy-multiregion-infra:
-    name: Deploy Multi Region Infrastructure
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
-
-      - name: Deploy
-        uses: ./.github/actions/go/deploy
-        with:
-          path: ./infra-multiregion/   
-          stage: ${{ inputs.stage }}
-
   deploy-auth:
     name: Deploy Auth
     runs-on: ubuntu-latest
