@@ -20,7 +20,7 @@ jobs:
     name: List Service Folders
     runs-on: ubuntu-latest
     env:
-      SERVICES_FOLDERS: (apis jobs)
+      SERVICES_FOLDERS: apis jobs
     outputs:
       services: ${{ steps.set-services.outputs.services }}
     steps:
