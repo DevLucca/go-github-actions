@@ -15,12 +15,13 @@ on:
         description: List of context to be deployed. Eg. "['ampli', 'fibra', 'mobi']"
         type: string
 
+env:
+  SERVICES_FOLDERS: apis jobs
+
 jobs:
   list-services:
     name: List Services
     runs-on: ubuntu-latest
-    env:
-      SERVICES_FOLDERS: apis jobs
     outputs:
       services: ${{ steps.set-services.outputs.services }}
     steps:
@@ -28,51 +29,19 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: ${{ github.ref }}
-      - id: set-services
-        name: Set Services List
 
+      - name: Set Services List
+        id: set-services
         shell: bash
         run: |
-          SERVICES_ARRAY=()
+          VALUES=$(printf ', "%s"' "${SERVICES_FOLDERS[@]}")
+          SERVICES_FOLDERS="["${VALUES:2}"]"
 
-          for SERVICE in $SERVICES_FOLDERS; do
-            for SUBFOLDER in "$SERVICE"/*; do
-              if [ -d "$SUBFOLDER" ]; then
-                SERVICES_ARRAY+=("$SUBFOLDER")
-              fi
-            done
-          done
-
-          echo "services=$(echo $SERVICES_ARRAY)" >> $GITHUB_OUTPUT
+          echo "services=$(echo $SERVICES_FOLDERS)" >> $GITHUB_OUTPUT
 
   test-services:
     needs: list-services
     name: Test Services
-    runs-on: ubuntu-latest
-    # strategy:
-    #   matrix: 
-    #     service: ${{ fromJSON(needs.list-services.outputs.services) }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
-
-      - name: Test Service
-        run: |
-          echo
-          for SERVICE in ${{ fromJSON(needs.list-services.outputs.services) }}; do;
-            cd $SERVICE
-            make test
-            cd -
-          done;
-
-  build-services:
-
-    needs: 
-      - list-services
-
-    name: Build Services
     runs-on: ubuntu-latest
     strategy:
       matrix: 
@@ -83,22 +52,48 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
-      - name: Build Services
-        uses: ./.github/actions/go/build
-        with:
-          path: ${{ matrix.service }}
+      - name: Test Service
+        run: |
+          for SERVICE in ${{ matrix.service }}; do
+            for SUB_SERVICE in "$SERVICE"/*; do
+              if [ -d "$SUB_SERVICE"]; then
+                cd $SERVICE
+                make test
+                cd -
+              fi;
+          done;
+
+  # build-services:
+  #   needs: 
+  #     - list-services
+
+  #   name: Build Services
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix: 
+  #       service: ${{ fromJSON(needs.list-services.outputs.services) }}
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #       with:
+  #         ref: ${{ github.ref }}
+
+  #     - name: Build Services
+  #       uses: ./.github/actions/go/build
+  #       with:
+  #         path: ${{ matrix.service }}
   
-  deploy:
-    needs: 
-      - build-services
-    name: Deploy
-    uses: ./.github/workflows/deploy.yml
-    strategy:
-      matrix:
-        context: ${{ fromJSON(github.event.inputs.context) }}
-    with:
-      context: ${{ matrix.context }}
-      stage: ${{ github.event.inputs.stage }}
-    secrets:
-      AWS_ACCESS_KEY_ID: ${{ secrets[format('AWS_ACCESS_KEY_ID_{0}_{1}', github.event.inputs.stage, matrix.context)] }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets[format('AWS_SECRET_ACCESS_KEY_{0}_{1}', github.event.inputs.stage, matrix.context)] }}
+  # deploy:
+  #   needs: 
+  #     - build-services
+  #   name: Deploy
+  #   uses: ./.github/workflows/deploy.yml
+  #   strategy:
+  #     matrix:
+  #       context: ${{ fromJSON(github.event.inputs.context) }}
+  #   with:
+  #     context: ${{ matrix.context }}
+  #     stage: ${{ github.event.inputs.stage }}
+  #   secrets:
+  #     AWS_ACCESS_KEY_ID: ${{ secrets[format('AWS_ACCESS_KEY_ID_{0}_{1}', github.event.inputs.stage, matrix.context)] }}
+  #     AWS_SECRET_ACCESS_KEY: ${{ secrets[format('AWS_SECRET_ACCESS_KEY_{0}_{1}', github.event.inputs.stage, matrix.context)] }}
