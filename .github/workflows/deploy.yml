@@ -33,12 +33,16 @@ jobs:
         run: |
           SERVICES_ARRAY=()
 
+          echo $(pwd)
+
           for SERVICE in $SERVICES_FOLDERS; do
-              for SUBFOLDER in "$SERVICE"/*; do
-                  if [ -d "$SUBFOLDER" ]; then
-                  SERVICES_ARRAY+=("$SUBFOLDER")
-                  fi
-              done
+            echo $SERVICE
+            for SUBFOLDER in "$SERVICE"/*; do
+              echo $SUBFOLDER
+              if [ -d "$SUBFOLDER" ]; then
+                SERVICES_ARRAY+=("$SUBFOLDER")
+              fi
+            done
           done
 
           echo $SERVICES_FOLDERS $SERVICES_ARRAY
