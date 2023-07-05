@@ -65,7 +65,7 @@ jobs:
         run: |
           tree .
       - name: Deploy
+        working-directory: apis/test1
         uses: ./.github/actions/go/deploy
         with:
-          path: apis/test1
           stage: ${{ inputs.stage }}
