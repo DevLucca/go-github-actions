@@ -84,14 +84,16 @@ jobs:
           ref: ${{ github.ref }}
 
       - name: Build Service
+        id: build-service
         run: |
           cd ${{ matrix.service }}
           make build
+          echo "service-name=$( echo ${{ matrix.service }} | sed 's#/#-#g')" >> $GITHUB_OUTPUT
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: build/services/${{ matrix.service }}
+          name: build-services-${{ steps.run_tests.outputs.service-name }}
           path: ${{ matrix.service }}/bin/**
 
   deploy-infra:
