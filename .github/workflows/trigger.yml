@@ -36,6 +36,7 @@ jobs:
         run: |
           VALUES=$(printf ', "%s"' "${SERVICES_FOLDERS[@]}")
           SERVICES_FOLDERS="["${VALUES:2}"]"
+          echo $SERVICES_FOLDERS
 
           echo "services=$(echo $SERVICES_FOLDERS)" >> $GITHUB_OUTPUT
 
