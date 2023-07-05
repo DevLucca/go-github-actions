@@ -31,25 +31,20 @@ jobs:
       - id: set-services
         name: Set Services List
         run: |
-          services_array=()
+          SERVICES_ARRAY=()
+
           for SERVICE in $SERVICES_FOLDERS; do
-            for SUBFOLDER in "$SERVICE"/*; do
-              if [ -d "$SUBFOLDER" ]; then
-                services_array+=("\"$SUBFOLDER\"")
-              fi
-            done
+              for SUBFOLDER in "$SERVICE"/*; do
+                  if [ -d "$SUBFOLDER" ]; then
+                  SERVICES_ARRAY+=("$SUBFOLDER")
+                  fi
+              done
           done
 
-          json_array="["
-          for ((i=0; i<${#services_array[@]}; i++)); do
-            json_array+="\"${services_array[i]}\""
-            if [ $i -lt $(( ${#services_array[@]} - 1 )) ]; then
-              json_array+=", "
-            fi
-          done
-          json_array+="]"
-          echo "services={\"include\":$(echo $json_array)}" >> $GITHUB_OUTPUT
-          echo $GITHUB_OUTPUT
+          JSON_ARRAY="["${$(printf ", \"%s\"" "${SERVICES_ARRAY[@]}"):1}"]"
+          echo $SERVICES_FOLDERS $JSON_ARRAY
+
+          echo "services={\"include\":$(echo $JSON_ARRAY)}" >> $GITHUB_OUTPUT
 
   test-services:
     needs: list-services
