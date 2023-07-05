@@ -17,7 +17,7 @@ on:
 
 jobs:
   list-services:
-    name: List Service Folders
+    name: List Services
     runs-on: ubuntu-latest
     env:
       SERVICES_FOLDERS: apis jobs
@@ -43,11 +43,7 @@ jobs:
             done
           done
 
-          JSON_ARRAY_VALUES=$(printf ", \"%s\"" "${SERVICES_ARRAY[@]}")
-          JSON_ARRAY="["${JSON_ARRAY_VALUES:2}"]"
-          echo $JSON_ARRAY
-
-          echo "services=$(echo $JSON_ARRAY)" >> $GITHUB_OUTPUT
+          echo "services=$(echo $SERVICES_ARRAY)" >> $GITHUB_OUTPUT
 
   test-services:
     needs: list-services
@@ -64,6 +60,7 @@ jobs:
 
       - name: Test Service
         run: |
+          echo
           for SERVICE in ${{ fromJSON(needs.list-services.outputs.services) }}; do;
             cd $SERVICE
             make test
@@ -71,6 +68,7 @@ jobs:
           done;
 
   build-services:
+
     needs: 
       - list-services
 
