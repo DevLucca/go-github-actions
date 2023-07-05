@@ -16,8 +16,55 @@ on:
         required: true
 
 jobs:
-  checkout:
-    name: Checkout
+  list-services:
+    runs-on: ubuntu-latest
+    env:
+      SERVICES_FOLDERS: (apis jobs)
+    outputs:
+      services: ${{ steps.set-services.outputs.services }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+      - id: set-services
+      run: |
+        services_array=()
+        for SERVICE in $SERVICES_FOLDERS; do
+          for SUBFOLDER in "$SERVICE"/*; do
+            if [ -d "$SUBFOLDER" ]; then
+              services_array+=("\"$SUBFOLDER\"")
+            fi
+          done
+        done
+
+        json_array="["
+        for ((i=0; i<${#services_array[@]}; i++)); do
+          json_array+="\"${services_array[i]}\""
+          if [ $i -lt $(( ${#services_array[@]} - 1 )) ]; then
+            json_array+=", "
+          fi
+        done
+        json_array+="]"
+        echo "services={\"include\":$(echo $json_array)}" >> $GITHUB_OUTPUT
+
+  test-services:
+    needs: list-services
+    name: Test APIs
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service: $ {{ fromJSON(needs.list-services.outputs.services) }}
+    steps:
+      - name: Test Service
+        run: |
+          echo ${{ matrix.service }}
+  # build-services:
+  #   name: Build
+
+
+  deploy-infra:
+    name: Deploy Infrastructure
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,16 +72,23 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
-  deploy-infra:
-    needs: 
-      - checkout
-    
-    name: Deploy Infrastructure
-    runs-on: ubuntu-latest
-    steps:
       - name: Deploy
         uses: ./.github/actions/go/deploy
         with:
           path: ./infra/   
           stage: ${{ inputs.stage }}
 
+  deploy-multiregion-infra:
+    name: Deploy Multi Region Infrastructure
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Deploy
+        uses: ./.github/actions/go/deploy
+        with:
+          path: ./infra-multiregion/   
+          stage: ${{ inputs.stage }}
