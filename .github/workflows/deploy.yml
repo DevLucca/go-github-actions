@@ -35,15 +35,14 @@ jobs:
 
           for SERVICE in $SERVICES_FOLDERS; do
             for SUBFOLDER in "$SERVICE"/*; do
-              echo $SUBFOLDER
               if [ -d "$SUBFOLDER" ]; then
-                echo HERE
                 SERVICES_ARRAY+=("$SUBFOLDER")
+                echo SERVICES_ARRAY
               fi
             done
           done
 
-          echo $SERVICES_FOLDERS $SERVICES_ARRAY
+          echo $SERVICES_ARRAY[@]
 
           JSON_ARRAY="["${$(printf ", \"%s\"" "${SERVICES_ARRAY[@]}"):1}"]"
           echo $JSON_ARRAY
