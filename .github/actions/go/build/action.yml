@@ -15,6 +15,7 @@ runs:
 
     - name: Build
       id: build-service
+      shell: bash
       run: |
         cd ${{ inputs.path }}
         make build
