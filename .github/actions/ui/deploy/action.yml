@@ -22,11 +22,10 @@ runs:
 
     - name: Deploy
       shell: bash
+      working-directory: ${{ inputs.path }}
       run: |
-        STAGE=${{ inputs.path }}
+        STAGE=${{ inputs.stage }}
         SERVERLESS_STAGE=`echo $STAGE | awk '$0 == "PRODUCTION" { print "prd" } $0 != "PRODUCTION" { print "dev" }'`
-
-        echo $STAGE $SERVERLESS_STAGE $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
         
-        # cd ./services/${{ github.workflow }}
-        # make serverless-deploy STAGE=$SERVERLESS_STAGE
+        serverless create-cert --stage $SERVERLESS_STAGE
+        serverless deploy --stage $SERVERLESS_STAGE
