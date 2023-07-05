@@ -68,7 +68,6 @@ jobs:
   build-services:
     needs: 
       - list-services
-
     name: Build Services
     runs-on: ubuntu-latest
     strategy:
@@ -106,17 +105,17 @@ jobs:
           name: build-services-${{ matrix.service }}
           path: ${{ matrix.service }}/**/bin/*.zip
   
-  # deploy:
-  #   needs: 
-  #     - build-services
-  #   name: Deploy
-  #   uses: ./.github/workflows/deploy.yml
-  #   strategy:
-  #     matrix:
-  #       context: ${{ fromJSON(github.event.inputs.context) }}
-  #   with:
-  #     context: ${{ matrix.context }}
-  #     stage: ${{ github.event.inputs.stage }}
-  #   secrets:
-  #     AWS_ACCESS_KEY_ID: ${{ secrets[format('AWS_ACCESS_KEY_ID_{0}_{1}', github.event.inputs.stage, matrix.context)] }}
-  #     AWS_SECRET_ACCESS_KEY: ${{ secrets[format('AWS_SECRET_ACCESS_KEY_{0}_{1}', github.event.inputs.stage, matrix.context)] }}
+  deploy:
+    needs: 
+      - build-services
+    name: Deploy
+    uses: ./.github/workflows/deploy.yml
+    strategy:
+      matrix:
+        context: ${{ fromJSON(github.event.inputs.context) }}
+    with:
+      context: ${{ matrix.context }}
+      stage: ${{ github.event.inputs.stage }}
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets[format('AWS_ACCESS_KEY_ID_{0}_{1}', github.event.inputs.stage, matrix.context)] }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets[format('AWS_SECRET_ACCESS_KEY_{0}_{1}', github.event.inputs.stage, matrix.context)] }}
