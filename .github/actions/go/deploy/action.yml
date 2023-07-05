@@ -28,4 +28,5 @@ runs:
 
         echo $STAGE $SERVERLESS_STAGE $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
         
+        # cd ./services/${{ github.workflow }}
         # make serverless-deploy STAGE=$SERVERLESS_STAGE
