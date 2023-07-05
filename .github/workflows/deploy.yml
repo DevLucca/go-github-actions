@@ -17,6 +17,7 @@ on:
 
 jobs:
   list-services:
+    name: List Service Folders
     runs-on: ubuntu-latest
     env:
       SERVICES_FOLDERS: (apis jobs)
@@ -48,10 +49,11 @@ jobs:
           done
           json_array+="]"
           echo "services={\"include\":$(echo $json_array)}" >> $GITHUB_OUTPUT
+          echo $GITHUB_OUTPUT
 
   test-services:
     needs: list-services
-    name: Test APIs
+    name: Test Services
     runs-on: ubuntu-latest
     strategy:
       matrix:
