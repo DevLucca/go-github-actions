@@ -34,7 +34,7 @@ jobs:
         id: set-services
         shell: bash
         run: |
-          VALUES=$(printf ', "%s"' "${SERVICES_FOLDERS[@]}")
+          VALUES=$(printf ', "%s"' "${(SERVICES_FOLDERS)[@]}")
           SERVICES_FOLDERS="["${VALUES:2}"]"
           echo $SERVICES_FOLDERS
 
