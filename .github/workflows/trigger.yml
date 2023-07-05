@@ -101,7 +101,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build-services-${{ matrix.service }}
-          path: ${{ matrix.service }}/*/bin/**.zip
+          path: ${{ matrix.service }}/**/bin/*.zip
   
   # deploy:
   #   needs: 
