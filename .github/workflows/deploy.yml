@@ -58,7 +58,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/download-artifact@v3
         with:
-          name: build-services-apis-auth
+          name: build-services-apis-test1
 
       - name: list dir
         run: |

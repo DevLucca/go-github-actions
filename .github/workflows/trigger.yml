@@ -70,7 +70,6 @@ jobs:
   build-services:
     needs: 
       - list-services
-      - test-services
 
     name: Build Services
     runs-on: ubuntu-latest
