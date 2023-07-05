@@ -7,7 +7,8 @@ on:
         required: true
         type: string
 
-deploy-auth:
+jobs:
+  deploy-auth:
     name: Deploy Auth API
     runs-on: ubuntu-latest
     steps:
