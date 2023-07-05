@@ -90,12 +90,15 @@ jobs:
         run: |
           for SERVICE in ./*; do
             if [ -d "$SERVICE" ]; then
-              echo $SERVICE
               cd $SERVICE
               make build
               cd -
             fi;
           done;
+      
+      - name: List Folder
+        run: |
+          tree ${{ matrix.service }}
 
       - name: Publish Artifacts
         uses: actions/upload-artifact@v3
