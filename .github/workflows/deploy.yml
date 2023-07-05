@@ -91,9 +91,10 @@ jobs:
           echo "service-name=$( echo ${{ matrix.service }} | sed 's#/#-#g')" >> $GITHUB_OUTPUT
 
       - name: Upload Artifact
+
         uses: actions/upload-artifact@v3
         with:
-          name: build-services-${{ steps.run_tests.outputs.service-name }}
+          name: build-services-${{ steps.build-service.outputs.service-name }}
           path: ${{ matrix.service }}/bin/**
 
   deploy-infra:
