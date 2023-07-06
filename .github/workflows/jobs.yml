@@ -8,6 +8,30 @@ on:
         type: string
 
 jobs:
+  deploy-customer-campaign-match:
+    name: Deploy Customer Campaign Match API
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build-services-jobs
+
+      - name: List Dir
+        run: |
+          tree .
+
+      - name: Deploy
+        uses: ./.github/actions/go/deploy
+        with:
+          path: jobs/customer-campaign-match
+          stage: ${{ inputs.stage }}
+
   deploy-engage-delivery:
     name: Deploy Engage Delivery Job
     runs-on: ubuntu-latest
@@ -17,7 +41,55 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
-      - name: Upload Artifact
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build-services-jobs
+
+      - name: List Dir
+        run: |
+          tree .
+
+      - name: Deploy
+        uses: ./.github/actions/go/deploy
+        with:
+          path: jobs/engage-delivery
+          stage: ${{ inputs.stage }}
+
+  deploy-delivery-sms:
+    name: Deploy Engage Delivery SMS Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build-services-jobs
+
+      - name: List Dir
+        run: |
+          tree .
+
+      - name: Deploy
+        uses: ./.github/actions/go/deploy
+        with:
+          path: jobs/delivery-sms
+          stage: ${{ inputs.stage }}
+
+  deploy-delivery-whatsapp:
+    name: Deploy Engage Delivery WhatsApp Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Download Artifact
         uses: actions/download-artifact@v3
         with:
           name: build-services-apis
@@ -29,56 +101,8 @@ jobs:
       - name: Deploy
         uses: ./.github/actions/go/deploy
         with:
-          path: apis/test2 ## TROCAR
+          path: jobs/delivery-whatsapp
           stage: ${{ inputs.stage }}
-
-  # deploy-delivery-sms:
-  #   name: Deploy Engage Delivery SMS Job
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #       with:
-  #         ref: ${{ github.ref }}
-
-  #     - name: Upload Artifact
-  #       uses: actions/download-artifact@v3
-  #       with:
-  #         name: build-services-apis
-
-  #     - name: List Dir
-  #       run: |
-  #         tree .
-
-  #     - name: Deploy
-  #       uses: ./.github/actions/go/deploy
-  #       with:
-  #         path: apis/test2 ## TROCAR
-  #         stage: ${{ inputs.stage }}
-
-  # deploy-delivery-whatsapp:
-  #   name: Deploy Engage Delivery WhatsApp Job
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #       with:
-  #         ref: ${{ github.ref }}
-
-  #     - name: Upload Artifact
-  #       uses: actions/download-artifact@v3
-  #       with:
-  #         name: build-services-apis
-
-  #     - name: List Dir
-  #       run: |
-  #         tree .
-
-  #     - name: Deploy
-  #       uses: ./.github/actions/go/deploy
-  #       with:
-  #         path: apis/test2 ## TROCAR
-  #         stage: ${{ inputs.stage }}
 
   # deploy-datalake:
   #   name: Deploy Deltalake Job
